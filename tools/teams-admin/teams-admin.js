@@ -5,7 +5,8 @@ const teamsContainer = document.getElementById('teams-container');
 const key = document.getElementById('key');
 const email = document.getElementById('email');
 
-const API_ENDPOINT = 'http://localhost:8787';
+// const API_ENDPOINT = 'http://localhost:8787';
+const API_ENDPOINT = 'https://teams.capt.workers.dev';
 
 
 const persistFormFields = () => {

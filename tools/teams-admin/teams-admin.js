@@ -126,6 +126,46 @@ const displayTeamsStatus = async () => {
   button.disabled = true;
   button.classList.add('button');
 
+  button.addEventListener('click', async () => {
+    const add = teamsContainer.querySelectorAll('.add');
+
+    const toadd = [];
+
+    add.forEach(async (li) => {
+      const displayName = li.querySelector('h4').textContent;
+      toadd.push(displayName);
+    });
+
+    await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
+      method: 'POST',
+      headers: {
+        'x-api-key': key.value,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(toadd),
+    });
+    
+
+    const remove = teamsContainer.querySelectorAll('.remove');
+    const toremove = [];
+
+    remove.forEach(async (li) => {
+      const displayName = li.querySelector('h4').textContent;
+      toremove.push(displayName);
+    });
+
+    await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
+      method: 'DELETE',
+      headers: {
+        'x-api-key': key.value,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(toremove),
+    });
+
+    displayTeamsStatus();
+  });
+
   const wrapper = document.createElement('p');
   wrapper.classList.add('button-wrapper');
   wrapper.appendChild(button);

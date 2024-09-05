@@ -1,0 +1,45 @@
+.teams-admin [aria-hidden='true'] {
+  display: none;
+}
+
+.teams-admin #teams-admin-form {
+  display: grid;
+  gap: var(--spacing-s);
+}
+
+.teams-admin #teams-admin-form .button-wrapper {
+  align-self: center;
+}
+
+.teams-admin #teams-container {
+  padding: 0 var(--horizontal-spacing);
+}
+
+.teams-admin #teams-container ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-s);
+  padding: 0;
+}
+
+.teams-admin #teams-container ul li {
+  border: var(--border-s) solid var(--gray-100);
+  list-style: none;
+  padding: var(--spacing-m);
+}
+
+.teams-admin #teams-container ul li.member {
+  background-color: var(--green-100);
+}
+
+.teams-admin #teams-container ul li.member.remove {
+  background-color: var(--red-100);
+}
+
+.teams-admin #teams-container ul li.not-member.add {
+  background-color: var(--blue-100);
+}
+
+.teams-admin #teams-container ul li p {
+  max-width: 200px;
+}

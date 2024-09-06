@@ -5,8 +5,8 @@ const teamsContainer = document.getElementById('teams-container');
 const key = document.getElementById('key');
 const email = document.getElementById('email');
 
-// const API_ENDPOINT = 'http://localhost:8787';
-const API_ENDPOINT = 'https://teams.capt.workers.dev';
+const API_ENDPOINT = 'http://localhost:8787';
+// const API_ENDPOINT = 'https://teams.capt.workers.dev';
 
 
 const persistFormFields = () => {
@@ -130,11 +130,22 @@ const displayTeamsStatus = async () => {
   button.addEventListener('click', async () => {
     const add = teamsContainer.querySelectorAll('.add');
 
-    const toadd = [];
+    const body = {
+      add: [],
+      remove: [],
+    };
 
     add.forEach(async (li) => {
       const displayName = li.querySelector('h4').textContent;
-      toadd.push(displayName);
+      body.add.push(displayName);
+    });
+
+
+    const remove = teamsContainer.querySelectorAll('.remove');
+
+    remove.forEach(async (li) => {
+      const displayName = li.querySelector('h4').textContent;
+      body.remove.push(displayName);
     });
 
     await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
@@ -143,25 +154,7 @@ const displayTeamsStatus = async () => {
         'x-api-key': key.value,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(toadd),
-    });
-    
-
-    const remove = teamsContainer.querySelectorAll('.remove');
-    const toremove = [];
-
-    remove.forEach(async (li) => {
-      const displayName = li.querySelector('h4').textContent;
-      toremove.push(displayName);
-    });
-
-    await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
-      method: 'DELETE',
-      headers: {
-        'x-api-key': key.value,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(toremove),
+      body: JSON.stringify(body),
     });
 
     displayTeamsStatus();

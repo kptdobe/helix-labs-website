@@ -63,3 +63,8 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.teams-admin button .spinner {
+  width: 20px;
+  height: 20px;
+}

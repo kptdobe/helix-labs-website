@@ -101,6 +101,7 @@ const displayTeamsStatus = async () => {
       refreshSaveButton();
     });
   });
+
   const button = document.createElement('button');
   button.id = 'save';
   button.textContent = 'Save';
@@ -108,6 +109,8 @@ const displayTeamsStatus = async () => {
   button.classList.add('button');
 
   button.addEventListener('click', async () => {
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span>';
     const add = teamsContainer.querySelectorAll('.add');
 
     const body = {

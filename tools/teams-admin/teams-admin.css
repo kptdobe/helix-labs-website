@@ -13,6 +13,9 @@
 
 .teams-admin #teams-container {
   padding: 0 var(--horizontal-spacing);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .teams-admin #teams-container ul {
@@ -42,4 +45,21 @@
 
 .teams-admin #teams-container ul li p {
   max-width: 200px;
+}
+
+.teams-admin .spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--blue-600);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  align-self: center;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

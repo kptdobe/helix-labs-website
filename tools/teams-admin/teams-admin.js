@@ -46,27 +46,6 @@ const getAllTeams = async () => {
   return [];
 }
 
-const displayMyTeams = async () => {
-  const teams = await getMyTeams();
-  if (teams.length) {
-    teamsContainer.ariaHidden = true;
-    teamsContainer.innerHTML = '';
-    const ul = document.createElement('ul');
-    teamsContainer.appendChild(ul);
-    teams.forEach(team => {
-      const li = document.createElement('li');
-      li.textContent = team.displayName;
-      ul.appendChild(li);
-    });
-    teamsContainer.ariaHidden = false;
-  } else {
-    const span = document.createElement('span');
-    span.textContent = 'Could not find teams for you.';
-    teamsContainer.append(span);
-    teamsContainer.ariaHidden = false;
-  }
-}
-
 const refreshSaveButton = () => {
   const button = document.getElementById('save');
 
@@ -81,14 +60,13 @@ const refreshSaveButton = () => {
 };
 
 const displayTeamsStatus = async () => {
+  teamsContainer.innerHTML = '<span class="spinner"></span>';
+
   const teams = await getMyTeams();
   const all = await getAllTeams();
   all.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
-  teamsContainer.ariaHidden = true;
-  teamsContainer.innerHTML = '';
   const ul = document.createElement('ul');
-  teamsContainer.appendChild(ul);
 
   all.forEach(team => {
     const found = teams.find(t => t.displayName === team.displayName);
@@ -173,9 +151,10 @@ const displayTeamsStatus = async () => {
   const wrapper = document.createElement('p');
   wrapper.classList.add('button-wrapper');
   wrapper.appendChild(button);
-  teamsContainer.appendChild(wrapper);
 
-  teamsContainer.ariaHidden = false;
+  teamsContainer.innerHTML = '';
+  teamsContainer.appendChild(ul);
+  teamsContainer.appendChild(wrapper);
 }
 
 /**

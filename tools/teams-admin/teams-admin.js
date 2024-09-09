@@ -13,31 +13,35 @@ const persistFormFields = () => {
 };
 
 const getMyTeams = async () => {
-  const response = await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
-    headers: {
-      'x-api-key': key.value,
-    }
-  });
+  try {
+    const response = await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
+      headers: {
+        'x-api-key': key.value,
+      }
+    });
 
-  if (response.ok) {
-    const teams = await response.json();
-    return teams;
-  }
+    if (response.ok) {
+      const teams = await response.json();
+      return teams;
+    }
+  } catch (e) {};
 
   return [];
 }
 
 const getAllTeams = async () => {
-  const response = await fetch(`${API_ENDPOINT}/teams`, {
-    headers: {
-      'x-api-key': key.value,
-    }
-  });
+  try {
+    const response = await fetch(`${API_ENDPOINT}/teams`, {
+      headers: {
+        'x-api-key': key.value,
+      }
+    });
 
-  if (response.ok) {
-    const teams = await response.json();
-    return teams;
-  }
+    if (response.ok) {
+      const teams = await response.json();
+      return teams;
+    }
+  } catch (e) {};
 
   return [];
 }
@@ -146,14 +150,22 @@ const displayTeamsStatus = async () => {
       body.remove.push(displayName);
     });
 
-    await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
-      method: 'POST',
-      headers: {
-        'x-api-key': key.value,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+    try {
+      const res = await fetch(`${API_ENDPOINT}/users/${email.value}/teams`, {
+        method: 'POST',
+        headers: {
+          'x-api-key': key.value,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        console.error(`Error saving updates: ${res.status} ${res.statusText}`);
+      }
+    } catch (e) {
+      console.error(e);
+    };
 
     displayTeamsStatus();
   });

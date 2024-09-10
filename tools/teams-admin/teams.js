@@ -1,11 +1,11 @@
+import { API_ENDPOINT } from './config.js';
+
 /* eslint-disable no-alert */
 const myteams = document.getElementById('myteams');
 const teamsContainer = document.getElementById('teams-container');
 
 const key = document.getElementById('key');
 const email = document.getElementById('email');
-
-const API_ENDPOINT = window.location.href.includes('localhost') ? 'http://localhost:8787': 'https://teams.capt.workers.dev';
 
 const persistFormFields = () => {
   localStorage.setItem('key', key.value);

@@ -59,10 +59,16 @@ const refreshSaveButton = () => {
   }
 };
 
-const displayTeamsStatus = async () => {
+const displayTeams = async () => {
   teamsContainer.innerHTML = '<span class="spinner"></span>';
 
   const teams = await getMyTeams();
+
+  if (teams.length === 0) {
+    teamsContainer.innerHTML = '<p>No teams found - invite user first.</p>';
+    return;
+  }
+  
   const all = await getAllTeams();
   all.sort((a, b) => a.displayName.localeCompare(b.displayName));
 
@@ -148,7 +154,7 @@ const displayTeamsStatus = async () => {
       console.error(e);
     };
 
-    displayTeamsStatus();
+    displayTeams();
   });
 
   const wrapper = document.createElement('p');
@@ -168,7 +174,7 @@ myteams.addEventListener('click', async (e) => {
   e.preventDefault();
   persistFormFields();
 
-  displayTeamsStatus();
+  displayTeams();
 });
 
 key.value = localStorage.getItem('key') || '';

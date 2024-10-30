@@ -47,7 +47,6 @@ const getReport = async () => {
     await Promise.all(promises);
   } catch (e) {};
 
-  console.log('report', report);
   return report;
 }
 
@@ -61,8 +60,11 @@ const getT = (text, header = false, nobreak = false) => {
 }
 
 const getDisplayDate = (date) => {
-  const d = new Date(date);
-  return `${d.toISOString().substring(0, 10)}`;
+  if (date) {
+    const d = new Date(date);
+    return `${d.toISOString().substring(0, 10)}`;
+  }
+  return '';
 }
 
 const viewReport = async () => {
@@ -99,7 +101,11 @@ const viewReport = async () => {
     tr.appendChild(getT(team.displayName));
     tr.appendChild(getT(getDisplayDate(team.createdDateTime), false, true));
     tr.appendChild(getT(team.channels.list.length));
-    const lastActivityTd = getT(getDisplayDate(team.channels.lastActivity), false, true);
+    let lastActivityTxt = 'No activity';
+    if (team.channels.lastActivity) {
+      lastActivityTxt = getDisplayDate(team.channels.lastActivity);
+    }
+    const lastActivityTd = getT(lastActivityTxt, false, true);
     const d = new Date(team.channels.lastActivity);
     const today = new Date();
     // Highlight teams that have not been active in the last 30 days.

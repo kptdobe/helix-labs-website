@@ -55,6 +55,7 @@ const viewReport = async () => {
   const table = document.createElement('table');
 
   const header = document.createElement('tr');
+  header.appendChild(getT('#', true));
   header.appendChild(getT('Team', true));
   header.appendChild(getT('Creation Date', true));
   header.appendChild(getT('Channels', true));
@@ -66,8 +67,9 @@ const viewReport = async () => {
   header.appendChild(getT('Admins', true));
   table.appendChild(header);
 
-  all.forEach(team => {
+  all.forEach((team, index) => {
     const tr = document.createElement('tr');
+    tr.appendChild(getT(index + 1));
     tr.appendChild(getT(team.displayName));
     tr.appendChild(getT(getDisplayDate(team.createdDateTime), false, true));
     tr.appendChild(getT(team.channels.list.length));

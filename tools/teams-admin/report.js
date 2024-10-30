@@ -9,20 +9,46 @@ const persistFormFields = () => {
   localStorage.setItem('key', key.value);
 };
 
-const getReport = async () => {
+const getAllTeams = async () => {
   try {
-    const response = await fetch(`${API_ENDPOINT}/report`, {
+    const response = await fetch(`${API_ENDPOINT}/teams`, {
       headers: {
         'x-api-key': key.value,
       }
     });
 
     if (response.ok) {
-      return response.json();
+      const teams = await response.json();
+      return teams;
     }
   } catch (e) {};
 
   return [];
+}
+
+const getReport = async () => {
+  const report = [];
+  try {
+    const teams = await getAllTeams();
+    
+    const promises = await Promise.all(teams.map(async team => {
+      const response = await fetch(`${API_ENDPOINT}/teams/${team.displayName}/report`, {
+        headers: {
+          'x-api-key': key.value,
+        }
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        report.push(json);
+      }
+      return null;
+    }));
+    await Promise.all(promises);
+  } catch (e) {};
+
+  console.log('report', report);
+  return report;
 }
 
 const getT = (text, header = false, nobreak = false) => {
